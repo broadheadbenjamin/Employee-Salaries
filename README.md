@@ -12,8 +12,11 @@ Pay is calculated for hourly employees as hourly rate for the first 80 hours, th
 For salaried employees they are paid every 2 weeks assuming a 52 week year. They are paid for 2 weeks regardless of hours worked.
 The federal tax for every employee is 15%.
 The state tax for every employee is found are as follows:
+
 	5%		: UT,WY,NV
+
 	6.5%	: CO, ID, AZ, OR
+	
 	7%		: WA, NM, TX
 
 

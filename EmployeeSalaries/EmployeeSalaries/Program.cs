@@ -5,45 +5,6 @@ using System.IO;
 namespace EmployeeSalaries
 {
     /// <summary>
-    /// Employee class.
-    /// </summary>
-    public class Employee
-    {
-        // Employee properties
-        public string employeeId;
-        public string firstName;
-        public string lastName;
-        public string payType;
-        public double salary;
-        public string startDate;
-        public string state;
-        public double hours;
-
-        /// <summary>
-        /// Constructor for a new employee.
-        /// </summary>
-        /// <param name="employeeId">   Employee ID</param>
-        /// <param name="firstName">    Employee first name</param>
-        /// <param name="lastName">     Employee last lame</param>
-        /// <param name="payType">      Employee pay type (hourly rate or salary)</param>
-        /// <param name="salary">       Employee salary or hourly rate</param>
-        /// <param name="startDate">    Employee date of initial employement</param>
-        /// <param name="state">        Employee state of employment</param>
-        /// <param name="hours">        Employee hours worked in last 2 weeks</param>
-        public Employee(String employeeId, string firstName, string lastName, string payType, double salary, string startDate, string state, double hours)
-        {
-            this.employeeId = employeeId;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.payType = payType;
-            this.salary = salary;
-            this.startDate = startDate;
-            this.state = state;
-            this.hours = hours;
-        }
-    }
-
-    /// <summary>
     /// Main program.
     /// </summary>
     class Program
@@ -179,7 +140,7 @@ namespace EmployeeSalaries
                 // Determine employee state of employement
                 if (lineItems[6] != "" || lineItems[6] != null)
                 {
-                    // Checl for valid formatting
+                    // Check for valid formatting
                     if (lineItems[6].Length != 2)
                     {
                         throw new SystemException("Parsing error. Employee state was in an invalid format. State shoud be two letter (e.g. UT for Utah). State was actually " + lineItems[6]);
@@ -222,9 +183,12 @@ namespace EmployeeSalaries
             // File path of the employees text document
             string filePath = "Employees.txt";
 
+            // Create a dictionary of employees from the text file.
             Dictionary<string, Employee> employeeDict = TextToDict(filePath);
-            Console.WriteLine("Press enter key to exit.");
-            Console.ReadLine();
+
+            // Create a paycheck.
+            PayCheck testCheck1 = new PayCheck(employeeDict, employeeDict["1"].employeeId);
+            PayCheck testCheck2 = new PayCheck(employeeDict, employeeDict["2"].employeeId);
         }
     }
 }

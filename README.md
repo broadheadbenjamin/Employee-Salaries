@@ -26,7 +26,8 @@ Generate a text file for each of the following scenarios (3 files total)
 2.	A list of the top 15% earners sorted by the number or years worked at the company (highest to lowest), then alphabetically by last name then first. The output should be first name, last name, number of years worked, gross pay.
 3.	A list of all states with median time worked, median net pay, and total state taxes paid. The output should be state, median time worked, median net pay, state taxes. Ordered by states alphabetically.
 
-Additionally
+Additionally,
+
 4.	Write a method that given an employee id would efficiently bring back an employee’s data 
 	* example, Employee GetByEmployeeId(string employeeId)
 

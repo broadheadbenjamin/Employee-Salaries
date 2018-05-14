@@ -13,11 +13,11 @@ For salaried employees they are paid every 2 weeks assuming a 52 week year. They
 The federal tax for every employee is 15%.
 The state tax for every employee is found are as follows:
 
-	5%		: UT,WY,NV
+5%		: UT,WY,NV
 
-	6.5%	: CO, ID, AZ, OR
+6.5%	: CO, ID, AZ, OR
 	
-	7%		: WA, NM, TX
+7%		: WA, NM, TX
 
 
 ## Requirements

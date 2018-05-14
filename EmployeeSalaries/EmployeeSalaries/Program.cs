@@ -220,7 +220,7 @@ namespace EmployeeSalaries
         static void Main(string[] args)
         {
             // File path of the employees text document
-            string filePath = "S:\\Github\\Employee-Salaries\\EmployeeSalaries\\EmployeeSalaries\\Text files\\Employees.txt";
+            string filePath = "Employees.txt";
 
             Dictionary<string, Employee> employeeDict = TextToDict(filePath);
             Console.WriteLine("Press enter key to exit.");

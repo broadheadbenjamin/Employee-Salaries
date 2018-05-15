@@ -1,10 +1,14 @@
 # Employee Salaries
 Small program that calculates employee salaries from a large text file.
 
-## Generated Files
+## Generated Files and Methods
 1.	Paychecks.txt 		Paycheck for each employee ordered by gross pay (highest to lowest).
 2.	TopEarners.txt 		List of the top 15% of earners sorted by years worked at the company (highest to lowest), then alphabetically by last name then first name.
 3.	States.txt 			Median time worked, median net pay, and paid state taxes for each state, ordered alphabetically.
+
+Additionally,
+
+4. GetByEmployeeId(string employeeId) is the method for getting an employee's data. Return's an employee object. Employee objects fields are publicly accessible.
 
 
 ## Directions

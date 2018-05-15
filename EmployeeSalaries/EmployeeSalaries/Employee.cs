@@ -19,6 +19,9 @@ namespace EmployeeSalaries
         public string state;
         public double hours;
         public double grossPay;
+        public double netPay;
+        public double federalTax;
+        public double stateTax;
 
         /// <summary>
         /// Constructor for a new employee.
@@ -88,6 +91,36 @@ namespace EmployeeSalaries
 
             // Round gross pay
             this.grossPay = Math.Round(this.grossPay, 2);
+
+            // Determine federal tax
+           this.federalTax = Math.Round(this.grossPay * 0.15, 2);
+
+            // Determine state tax
+            switch (this.state)
+            {
+                case "UT":
+                case "WY":
+                case "NV":
+                    this.stateTax = Math.Round(this.grossPay * 0.05, 2);
+                    break;
+                case "CO":
+                case "ID":
+                case "AZ":
+                case "OR":
+                    this.stateTax = Math.Round(this.grossPay * 0.065, 2);
+                    break;
+                case "WA":
+                case "NM":
+                case "TX":
+                    this.stateTax = Math.Round(this.grossPay * 0.07, 2);
+                    break;
+                default:
+                    this.stateTax = 0;
+                    break;
+            }
+
+            // Determine netpay
+            this.netPay = Math.Round(this.grossPay - this.federalTax - this.stateTax, 2);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace EmployeeSalaries
     /// </summary>
     class Program
     {
+        // Program global variables
+        static Dictionary<string, Employee> employeeDict;
+
         /// <summary>
         /// Converts a text file into a dictionary. All strings are capitalized for formatting consistency.
         /// </summary>
@@ -179,6 +182,24 @@ namespace EmployeeSalaries
         }
 
         /// <summary>
+        /// Retreives employee info given an employee ID
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        static Employee GetByEmployeeId(string employeeId)
+        {
+            if (employeeId == "" || employeeId == null)
+            {
+                throw new SystemException("Employee can not be empty or null");
+            }
+            else if (employeeDict.ContainsKey(employeeId) == false)
+            {
+                throw new SystemException("Employee ID is not valid or does not exist.");
+            }
+            return employeeDict[employeeId];
+        }
+
+        /// <summary>
         /// Main program. Calls helper methods to generate text output files.
         /// </summary>
         /// <param name="args"></param>
@@ -188,7 +209,7 @@ namespace EmployeeSalaries
             string filePath = "Employees.txt";
 
             // Create a dictionary of employees from the text file
-            Dictionary<string, Employee> employeeDict = TextToDict(filePath);
+            employeeDict = TextToDict(filePath);
 
             // Create a list of paychecks for all employees
             List<PayCheck> employeePayChecks = new List<PayCheck>();
@@ -224,6 +245,39 @@ namespace EmployeeSalaries
                     Employee currentEmployee = employeeList[i].Value;
                     int yearsWorked = DateTime.Now.Year - currentEmployee.startDate.Year;
                     string line = currentEmployee.firstName + ", " + currentEmployee.lastName + ", " + yearsWorked + ", " + currentEmployee.grossPay;
+                    file.WriteLine(line);
+                }
+            }
+
+            // Calculate stats for each state.
+            Dictionary<string, StateInfo> states = new Dictionary<string, StateInfo>();
+            foreach (KeyValuePair<string, Employee> employee in employeeDict)
+            {
+                // Add to the dictionary of states
+                if (states.ContainsKey(employee.Value.state))
+                {
+                    states[employee.Value.state].UpdateState(employee.Value);
+                }
+                else
+                {
+                    StateInfo newState = new StateInfo(employee.Value.state);
+                    states.Add(employee.Value.state, newState);
+                    states[employee.Value.state].UpdateState(employee.Value);
+                }
+            }
+
+            // Write state data to file
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("States.txt"))
+            {
+
+                // Sort the states alphabetically.
+                var sortedStates = states.Values.ToList();
+                sortedStates.Sort((x, y) => x.state.CompareTo(y.state));
+
+                // Calculate the state data for each state.
+                foreach (StateInfo state in sortedStates)
+                {
+                    string line = state.state + ", " + state.MedianTimeWorked() + ", " + state.MedianNetPay() + ", " + state.StateTaxes();
                     file.WriteLine(line);
                 }
             }

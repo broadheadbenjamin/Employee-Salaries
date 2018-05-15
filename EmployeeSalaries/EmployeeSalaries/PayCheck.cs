@@ -7,17 +7,21 @@ namespace EmployeeSalaries
     public class PayCheck
     {
         // Paycheck properties
-        string firstName;
-        string lastName;
-        double grossPay;
-        double federalTax;
-        double stateTax;
-        double netPay;
+        public string employeeId;
+        public string firstName;
+        public string lastName;
+        public double grossPay;
+        public double federalTax;
+        public double stateTax;
+        public double netPay;
 
         public PayCheck(Dictionary<string, Employee> employeeDict, string employeeId)
         {
             // Get the employee data
             Employee employee = employeeDict[employeeId];
+
+            // Set the employee ID
+            this.employeeId = employee.employeeId;
 
             // Set first and last name
             this.firstName = employee.firstName;
@@ -58,7 +62,7 @@ namespace EmployeeSalaries
                 }
 
             // Round gross pay
-            Math.Round(this.grossPay, 2);
+            this.grossPay = Math.Round(this.grossPay, 2);
 
             // Determine federal tax
             this.federalTax = Math.Round(this.grossPay * 0.15, 2);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EmployeeSalaries
 {
@@ -170,6 +171,9 @@ namespace EmployeeSalaries
                 employeeDict.Add(employeeId, newEmployee);
             }
 
+            // Close the stream
+            file.Close();
+
             // Return the dictionary
             return employeeDict;
         }
@@ -183,12 +187,46 @@ namespace EmployeeSalaries
             // File path of the employees text document
             string filePath = "Employees.txt";
 
-            // Create a dictionary of employees from the text file.
+            // Create a dictionary of employees from the text file
             Dictionary<string, Employee> employeeDict = TextToDict(filePath);
 
-            // Create a paycheck.
-            PayCheck testCheck1 = new PayCheck(employeeDict, employeeDict["1"].employeeId);
-            PayCheck testCheck2 = new PayCheck(employeeDict, employeeDict["2"].employeeId);
+            // Create a list of paychecks for all employees
+            List<PayCheck> employeePayChecks = new List<PayCheck>();
+            foreach (KeyValuePair<string, Employee> employee in employeeDict)
+            {
+                // Create a new paycheck for this employee
+                PayCheck currentPayCheck = new PayCheck(employeeDict, employee.Value.employeeId);
+                employeePayChecks.Add(currentPayCheck);
+            }
+
+            // Sort the list of paychecks by gross pay (high to low)
+            employeePayChecks.Sort((x, y) => -1 * x.grossPay.CompareTo(y.grossPay));
+
+            // Write the sorted list to a file
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("PayChecks.txt"))
+            {
+                foreach (PayCheck payCheck in employeePayChecks)
+                {
+                    string line = payCheck.employeeId + ", " + payCheck.firstName + ", " + payCheck.lastName + "," + payCheck.grossPay + ", " + payCheck.federalTax + ", " + payCheck.stateTax + ", " + payCheck.netPay;
+                    file.WriteLine(line);
+                }
+            }
+
+            // Convert to employee dictionary to a list and sort it
+            var employeeList = employeeDict.OrderBy(x => -1 * x.Value.grossPay).ThenBy(x => x.Value.startDate).ThenBy(x => x.Value.lastName).ThenBy(x => x.Value.firstName).ToList();
+
+            // Write the top 15% of earners
+            int topEarnersCount = Convert.ToInt32(employeeDict.Count * 0.15);
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("TopEarners.txt"))
+            {
+                for (int i = 0; i < topEarnersCount; i++)
+                {
+                    Employee currentEmployee = employeeList[i].Value;
+                    int yearsWorked = DateTime.Now.Year - currentEmployee.startDate.Year;
+                    string line = currentEmployee.firstName + ", " + currentEmployee.lastName + ", " + yearsWorked + ", " + currentEmployee.grossPay;
+                    file.WriteLine(line);
+                }
+            }
         }
     }
 }

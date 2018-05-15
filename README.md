@@ -8,7 +8,9 @@ Small program that calculates employee salaries from a large text file.
 
 Additionally,
 
-4. GetByEmployeeId(string employeeId) is the method for getting an employee's data. Return's an employee object. Employee objects fields are publicly accessible.
+**Source code I wrote to generate the files is found in Employee-Salaries/EmployeeSalaries/EmployeeSalaries/**
+
+GetByEmployeeId(string employeeId) is the method for getting an employee's data. Returns an employee object. Employee objects fields are publicly accessible.
 
 
 ## Directions
